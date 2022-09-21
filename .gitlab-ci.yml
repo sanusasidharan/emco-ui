@@ -1,0 +1,53 @@
+# =======================================================================
+# Copyright (c) 2017-2021 Aarna Networks, Inc.
+# All rights reserved.
+# ======================================================================
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#           http://www.apache.org/licenses/LICENSE-2.0
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========================================================================
+
+stages:
+  - build
+build_emcoui:
+  stage: build
+  image:
+    # An alpine-based image with the `docker` CLI installed.
+    name: docker:dind
+  services:
+    - name: docker:dind
+      alias: docker
+  variables:
+    # Set these variables at the project level
+    AMCOP_TAG: "2.3"
+    MIDDLEEND_MODULE_NAME: "lfnmiddleend"
+    UI_MODULE_NAME: "lfnemcoui"
+    DOCKERHUB_REPO: "aarnanetwork"
+
+  before_script:
+    - echo "Project directory $CI_PROJECT_DIR $DOCKERHUB_USER"
+    # Set these variables at the project level
+    - docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASSWORD}
+
+  script:
+    # Building and pushing emcoui
+    - docker build --pull -t "${DOCKERHUB_REPO}"/"${UI_MODULE_NAME}":"${AMCOP_TAG}"-latest .
+
+    - echo "Pushing ${DOCKERHUB_REPO}/$UI_MODULE_NAME to docker hub with tag ${AMCOP_TAG}-latest"
+
+    - docker push "${DOCKERHUB_REPO}"/"${UI_MODULE_NAME}":"${AMCOP_TAG}"-latest
+
+    # Building and pushing guimiddleend
+    - cd $CI_PROJECT_DIR/guimiddleend
+
+    - docker build --pull -t "${DOCKERHUB_REPO}"/"${MIDDLEEND_MODULE_NAME}":"${AMCOP_TAG}"-latest .
+
+    - echo "Pushing ${DOCKERHUB_REPO}/${MIDDLEEND_MODULE_NAME} to docker hub with tag ${AMCOP_TAG}-latest"
+
+    - docker push "${DOCKERHUB_REPO}"/"${MIDDLEEND_MODULE_NAME}":"${AMCOP_TAG}"-latest

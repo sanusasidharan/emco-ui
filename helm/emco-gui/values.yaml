@@ -1,0 +1,111 @@
+#=======================================================================
+# Copyright (c) 2017-2020 Aarna Networks, Inc.
+# All rights reserved.
+# ======================================================================
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#           http://www.apache.org/licenses/LICENSE-2.0
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========================================================================
+
+global:
+  nodePortPrefixExt: 305
+  persistence: {}
+  db:
+    emcouiPassword:
+#################################################################
+# Application configuration defaults.
+#################################################################
+# default number of instances
+replicaCount: 1
+
+nodeSelector: {}
+
+affinity: {}
+
+namespace: emco
+# probe configuration parameters
+liveness:
+  initialDelaySeconds: 10
+  periodSeconds: 30
+  # necessary to disable liveness probe when setting breakpoints
+  # in debugger so K8s doesn't restart unresponsive container
+  enabled: true
+
+readiness:
+  initialDelaySeconds: 10
+  periodSeconds: 30
+
+authgw:
+  type: NodePort
+  name: emco-gui-authgw 
+  portName: emco-gui-authgw 
+  internalPort: 5000 
+  externalPort: 5000 
+  nodePort: 61
+  label: emco-gui-authgw 
+image:
+  repository: registry.gitlab.com/project-emco/ui/emco-gui/emco-gui-authgw 
+  tag: 22.03 
+  pullPolicy: Always
+
+middleend:
+  service:
+    type: NodePort
+    name: emco-gui-middleend
+    portName: emco-gui-middleend
+    internalPort: 9051
+    externalPort: 9051
+    nodePort: 51
+    # logLevel possible values are (debug, info, error)
+    logLevel: debug 
+    # flag for auto instantiating the Monitor, Istio Agent
+    appInstantiate: false
+    label: emco-gui-middleend
+
+  image:
+    repository: registry.gitlab.com/project-emco/ui/emco-gui/emco-gui-middleend 
+    tag: 22.03 
+    pullPolicy: Always
+
+emcogui:
+  service:
+    type: NodePort
+    name: emco-gui
+    portName: emco-ui
+    internalPort: 9080
+    externalPort: 9080
+    nodePort: 80
+    label: emco-gui
+
+  image:
+    repository: registry.gitlab.com/project-emco/ui/emco-gui/emco-gui 
+    tag: 22.03 
+    pullPolicy: Always
+
+ingress:
+  enabled: false
+
+# Configure resource requests and limits
+flavor: large
+resources:
+  small:
+    limits:
+      cpu: 100m
+      memory: 200Mi
+    requests:
+      cpu: 5m
+      memory: 5Mi
+  large:
+    limits:
+      cpu: 200m
+      memory: 500Mi
+    requests:
+      cpu: 5m
+      memory: 50Mi
+  unlimited: {}
