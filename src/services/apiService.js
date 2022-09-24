@@ -661,7 +661,7 @@ const deleteLogicalCloud = (request) => {
 const addCluster = (request) => {
   return  instance
     .post(
-      `/middleend/cluster-providers/${request.get("providerName")}/clusters`,
+      `/v2/cluster-providers/${request.get("providerName")}/clusters`,
       request
     )
     .then((res) => {
@@ -671,7 +671,7 @@ const addCluster = (request) => {
 
 const addService = ({ projectName, ...request }) => {
   return  instance
-    .post(`/middleend/projects/${projectName}/composite-apps`, request.payload)
+    .post(`/v2/projects/${projectName}/composite-apps`, request.payload)
     .then((res) => {
       return res.data;
     });
@@ -680,7 +680,7 @@ const addService = ({ projectName, ...request }) => {
 const deleteCompositeApp = (request) => {
   return  instance
     .delete(
-      `/middleend/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}`
+      `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}`
     )
     .then((res) => {
       return res.data;
@@ -688,14 +688,14 @@ const deleteCompositeApp = (request) => {
 };
 
 const checkoutService = (request) => {
-  var req = `/middleend/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/checkout`;
+  var req = `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/checkout`;
   return  instance.post(req).then((res) => {
     return res.data;
   });
 };
 
 const checkInService = (request) => {
-  var req = `/middleend/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/update`;
+  var req = `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/update`;
   return  instance.post(req).then((res) => {
     return res.data;
   });
@@ -703,7 +703,7 @@ const checkInService = (request) => {
 
 const getAllCompositeApps = (request) => {
   return  instance
-    .get(`/middleend/projects/${request.projectName}/composite-apps`, {
+    .get(`/v2/projects/${request.projectName}/composite-apps`, {
       params: { filter: "depthAll" },
     })
     .then((res) => {
@@ -713,7 +713,7 @@ const getAllCompositeApps = (request) => {
 
 const getCreatedCompositeApps = (request) => {
   return  instance
-    .get(`/middleend/projects/${request.projectName}/composite-apps`, {
+    .get(`/v2/projects/${request.projectName}/composite-apps`, {
       params: { filter: "depthAll", status: "created" },
     })
     .then((res) => {
@@ -724,7 +724,7 @@ const getCreatedCompositeApps = (request) => {
 const getCompositeAppDetails = (request) => {
   return  instance
     .get(
-      `/middleend/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}`,
+      `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}`,
       { params: { filter: "depthAll" } }
     )
     .then((res) => {
@@ -735,7 +735,7 @@ const getCompositeAppDetails = (request) => {
 const getCompositeAppVersions = (request) => {
   return  instance
     .get(
-      `/middleend/projects/${request.projectName}/composite-apps/${request.compositeAppName}/versions`,
+      `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/versions`,
       { params: request.state ? { state: "created" } : {} }
     )
     .then((res) => res.data);
@@ -744,7 +744,7 @@ const getCompositeAppVersions = (request) => {
 const removeAppFromService = (request) => {
   return  instance
     .delete(
-      `/middleend/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/apps/${request.appName}`
+      `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/apps/${request.appName}`
     )
     .then((res) => {
       return res.data;
@@ -758,7 +758,7 @@ const updateService = (request) => {
   }
   return  instance
     .post(
-      `/middleend/projects/${request.get(
+      `/v2/projects/${request.get(
         "projectName"
       )}/composite-apps/${request.get("compositeAppName")}/${request.get(
         "compositeAppVersion"
@@ -779,7 +779,7 @@ const createDeploymentIntentGroup = ({
 }) => {
   return  instance
     .post(
-      `/middleend/projects/${projectName}/composite-apps/${compositeAppName}/${compositeAppVersion}/deployment-intent-groups`,
+      `/v2/projects/${projectName}/composite-apps/${compositeAppName}/${compositeAppVersion}/deployment-intent-groups`,
       payload
     )
     .then((res) => {
@@ -788,7 +788,7 @@ const createDeploymentIntentGroup = ({
 };
 const getDeploymentIntentGroups = (request) => {
   return  instance
-    .get(`/middleend/projects/${request.projectName}/deployment-intent-groups`)
+    .get(`/v2/projects/${request.projectName}/deployment-intent-groups`)
     .then((res) => {
       return res.data;
     });
@@ -796,7 +796,7 @@ const getDeploymentIntentGroups = (request) => {
 const deleteDeploymentIntentGroup = (request) => {
   return  instance
     .delete(
-      `/middleend/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/deployment-intent-groups/${request.deploymentIntentGroupName}`,
+      `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/deployment-intent-groups/${request.deploymentIntentGroupName}`,
       { params: { operation: "deleteAll" } }
     )
     .then((res) => {
@@ -807,7 +807,7 @@ const deleteDeploymentIntentGroup = (request) => {
 const getDeploymentIntentGroupStatus = (request) => {
   return  instance
     .get(
-      `/middleend/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/deployment-intent-groups/${request.deploymentIntentGroupName}/status`
+      `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/deployment-intent-groups/${request.deploymentIntentGroupName}/status`
     )
     .then((res) => {
       return res.data;
@@ -816,14 +816,14 @@ const getDeploymentIntentGroupStatus = (request) => {
 
 const getDashboardData = (projectName) => {
   return  instance
-    .get(`/middleend/projects/${projectName}/dashboard`)
+    .get(`/v2/projects/${projectName}/dashboard`)
     .then((res) => res.data);
 };
 
 const createLogicalCloud = (request) => {
   return  instance
     .post(
-      `/middleend/projects/${request.projectName}/logical-clouds`,
+      `/v2/projects/${request.projectName}/logical-clouds`,
       request.payload
     )
     .then((res) => {
@@ -832,7 +832,7 @@ const createLogicalCloud = (request) => {
 };
 
 const getAllClusters = () => {
-  return  instance.get(`/middleend/all-clusters`).then((res) => {
+  return  instance.get(`/v2/all-clusters`).then((res) => {
     return res.data;
   });
 };
@@ -840,7 +840,7 @@ const getAllClusters = () => {
 const getAllClusterNetworks = (request) => {
   return  instance
     .get(
-      `/middleend/cluster-providers/${request.providerName}/clusters/${request.clusterName}/networks`
+      `/v2/cluster-providers/${request.providerName}/clusters/${request.clusterName}/networks`
     )
     .then((res) => res.data);
 };
@@ -848,7 +848,7 @@ const getAllClusterNetworks = (request) => {
 const getCheckoutServiceInstance = (request) => {
   return  instance
     .get(
-      `/middleend/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/deployment-intent-groups/${request.deploymentIntentGroupName}/checkout
+      `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/deployment-intent-groups/${request.deploymentIntentGroupName}/checkout
     `
     )
     .then((res) => res.data);
@@ -857,7 +857,7 @@ const getCheckoutServiceInstance = (request) => {
 const checkoutServiceInstance = (request) => {
   return  instance
     .post(
-      `/middleend/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/deployment-intent-groups/${request.deploymentIntentGroupName}/checkout`,
+      `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/deployment-intent-groups/${request.deploymentIntentGroupName}/checkout`,
       null,
       {
         params: { operation: "update" },
@@ -869,7 +869,7 @@ const checkoutServiceInstance = (request) => {
 const saveCheckoutServiceInstance = (request) => {
   return  instance
     .put(
-      `/middleend/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/deployment-intent-groups/${request.deploymentIntentGroupName}/checkout`,
+      `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/deployment-intent-groups/${request.deploymentIntentGroupName}/checkout`,
       request.payload,
       {
         params: { operation: "save" },
@@ -881,7 +881,7 @@ const saveCheckoutServiceInstance = (request) => {
 const deleteCheckoutServiceInstance = (request) => {
   return  instance
     .delete(
-      `/middleend/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/deployment-intent-groups/${request.deploymentIntentGroupName}`,
+      `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/deployment-intent-groups/${request.deploymentIntentGroupName}`,
       {
         params: { operation: "local" },
       }
@@ -892,7 +892,7 @@ const deleteCheckoutServiceInstance = (request) => {
 const submitCheckoutServiceInstance = (request) => {
   return  instance
     .post(
-      `/middleend/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/deployment-intent-groups/${request.deploymentIntentGroupName}/checkout/submit`
+      `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/deployment-intent-groups/${request.deploymentIntentGroupName}/checkout/submit`
     )
     .then((res) => res.data);
 };
@@ -900,7 +900,7 @@ const submitCheckoutServiceInstance = (request) => {
 const migrateServiceInstance = (request) => {
   return  instance
     .post(
-      `/middleend/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/deployment-intent-groups/${request.deploymentIntentGroupName}/checkout`,
+      `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/deployment-intent-groups/${request.deploymentIntentGroupName}/checkout`,
       null,
       {
         params: { operation: "migrate", targetVersion: request.targetVersion },
@@ -909,26 +909,26 @@ const migrateServiceInstance = (request) => {
     .then((res) => res.data);
 };
 const terminateAndDeleteLogicalCloud = (request) => {
-  let deleteUrl = `/middleend/projects/${request.projectName}/logical-clouds/${request.logicalCloudName}`;
+  let deleteUrl = `/v2/projects/${request.projectName}/logical-clouds/${request.logicalCloudName}`;
   return  instance.delete(deleteUrl);
 };
 
 const registerClusterProvider = (request) => {
   return  instance
-    .post(`/middleend/cluster-providers`, { ...request })
+    .post(`/v2/cluster-providers`, { ...request })
     .then((res) => {
       return res.data;
     });
 };
 
 const deleteClusterProvider = (providerName) => {
-  return  instance.delete(`/middleend/cluster-providers/${providerName}`).then((res) => {
+  return  instance.delete(`/v2/cluster-providers/${providerName}`).then((res) => {
     return res.data;
   });
 }
 const getLogicalClouds = (projectName) => {
     return  instance
-        .get(`/middleend/projects/${projectName}/logical-clouds`)
+        .get(`/v2/projects/${projectName}/logical-clouds`)
         .then((res) => res.data);
 };
 
