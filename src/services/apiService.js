@@ -18,12 +18,12 @@ import axios from "axios";
 //orchestrator
 //projects
 
-let orchestrator_endpoint = "https://orchestrator-routes-emco.apps.infy-rh-telco.01ub.p1.openshiftapps.com"
-let clm_endpoint = "https://clm-routes-emco.apps.infy-rh-telco.01ub.p1.openshiftapps.com"
-let network-ncm = "https://ncm-routes-emco.apps.infy-rh-telco.01ub.p1.openshiftapps.com"
-let ovnaction_endpoint  =   "https://clm-routes-emco.apps.infy-rh-telco.01ub.p1.openshiftapps.com"
-let dtc_endpoint  = "https://dtc-routes-emco.apps.infy-rh-telco.01ub.p1.openshiftapps.com"
-let dcm_endpoint  =  "https://dcm-routes-emco.apps.infy-rh-telco.01ub.p1.openshiftapps.com"
+let orchestrator_endpoint = "https://orchestrator-routes-emco.apps.infy-rh-telco.01ub.p1.openshiftapps.com" ;
+let clm_endpoint = "https://clm-routes-emco.apps.infy-rh-telco.01ub.p1.openshiftapps.com" ;
+let network_ncm = "https://ncm-routes-emco.apps.infy-rh-telco.01ub.p1.openshiftapps.com" ;
+let ovnaction_endpoint  =   "https://clm-routes-emco.apps.infy-rh-telco.01ub.p1.openshiftapps.com" ;
+let dtc_endpoint  = "https://dtc-routes-emco.apps.infy-rh-telco.01ub.p1.openshiftapps.com"  ;
+let dcm_endpoint  =  "https://dcm-routes-emco.apps.infy-rh-telco.01ub.p1.openshiftapps.com" ;
 const createProject = (request) => {
     return axios.post(orchestrator_endpoint + "/v2/projects", {...request}).then((res) => res.data);
 };
@@ -487,11 +487,11 @@ const deleteKvPair = (request) => {
         });
 }
 
-//network-ncm
+//network_ncm
 const getClusterProviderNetworks = (request) => {
     return axios
         .get(
-            network-ncm + `/v2/ncm/${request.providerName}/clusters/${request.clusterName}/provider-networks`
+            network_ncm + `/v2/ncm/${request.providerName}/clusters/${request.clusterName}/provider-networks`
         )
         .then((res) => {
             return res.data;
@@ -501,7 +501,7 @@ const getClusterProviderNetworks = (request) => {
 const getClusterNetworks = (request) => {
     return axios
         .get(
-            network-ncm + `/v2/ncm/${request.providerName}/clusters/${request.clusterName}/networks`
+            network_ncm + `/v2/ncm/${request.providerName}/clusters/${request.clusterName}/networks`
         )
         .then((res) => {
             return res.data;
@@ -511,7 +511,7 @@ const getClusterNetworks = (request) => {
 const addNetwork = (request) => {
     return axios
         .post(
-            network-ncm + `/v2/ncm/${request.providerName}/clusters/${request.clusterName}/${request.networkType}`,
+            network_ncm + `/v2/ncm/${request.providerName}/clusters/${request.clusterName}/${request.networkType}`,
             request.payload
         )
         .then((res) => {
@@ -522,7 +522,7 @@ const addNetwork = (request) => {
 const deleteClusterNetwork = (request) => {
     return axios
         .delete(
-            network-ncm + `/v2/ncm/${request.providerName}/clusters/${request.clusterName}/${request.networkType}/${request.networkName}`
+            network_ncm + `/v2/ncm/${request.providerName}/clusters/${request.clusterName}/${request.networkType}/${request.networkName}`
         )
         .then((res) => {
             return res.data;
@@ -531,7 +531,7 @@ const deleteClusterNetwork = (request) => {
 const applyNetworkConfig = (request) => {
     return axios
         .post(
-            network-ncm + `/v2/ncm/${request.providerName}/clusters/${request.clusterName}/apply`,
+            network_ncm + `/v2/ncm/${request.providerName}/clusters/${request.clusterName}/apply`,
             request.payload
         )
         .then((res) => {
@@ -541,7 +541,7 @@ const applyNetworkConfig = (request) => {
 const terminateNetworkConfig = (request) => {
     return axios
         .post(
-            network-ncm + `/v2/ncm/${request.providerName}/clusters/${request.clusterName}/terminate`,
+            network_ncm + `/v2/ncm/${request.providerName}/clusters/${request.clusterName}/terminate`,
             request.payload
         )
         .then((res) => {
