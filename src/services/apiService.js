@@ -43,7 +43,7 @@ const getAllProjects = () => {
 //composite apps
 const getCompositeApps = (request) => {
     return axios
-        .get(composite-apps + `/v2/projects/${request.projectName}/composite-apps`)
+        .get(`/v2/projects/${request.projectName}/composite-apps`)
         .then((res) => {
             return res.data;
         });
@@ -51,7 +51,7 @@ const getCompositeApps = (request) => {
 
 const createCompositeApp = ({projectName, ...request}) => {
     return axios
-        .post(composite-apps +  `/v2/projects/${projectName}/composite-apps`, request.payload)
+        .post( `/v2/projects/${projectName}/composite-apps`, request.payload)
         .then((res) => {
             return res.data;
         });
@@ -59,7 +59,7 @@ const createCompositeApp = ({projectName, ...request}) => {
 const updateCompositeApp = (request) => {
     return axios
         .put(
-            composite-apps + `/v2/projects/${request.projectName}/composite-apps/${request.payload.name}/${request.compositeAppVersion}`,
+            `/v2/projects/${request.projectName}/composite-apps/${request.payload.name}/${request.compositeAppVersion}`,
             request.payload
         )
         .then((res) => {
@@ -71,7 +71,7 @@ const updateCompositeApp = (request) => {
 const getApps = (request) => {
     return axios
         .get(
-            composite-apps +  `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/apps`
+              `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/apps`
         )
         .then((res) => {
             return res.data;
@@ -80,7 +80,7 @@ const getApps = (request) => {
 const addApp = (request) => {
     return axios
         .post(
-            composite-apps + `/v2/projects/${request.get("projectName")}/composite-apps/${request.get(
+             `/v2/projects/${request.get("projectName")}/composite-apps/${request.get(
                 "compositeAppName"
             )}/${request.get("compositeAppVersion")}/apps`,
             request
@@ -92,7 +92,7 @@ const addApp = (request) => {
 const updateApp = (request) => {
     return axios
         .put(
-            composite-apps + `/v2/projects/${request.get("projectName")}/composite-apps/${request.get(
+             `/v2/projects/${request.get("projectName")}/composite-apps/${request.get(
                 "compositeAppName"
             )}/${request.get("compositeAppVersion")}/apps/${request.get("appName")}`,
             request
@@ -104,7 +104,7 @@ const updateApp = (request) => {
 const deleteApp = (request) => {
     return axios
         .delete(
-           composite-apps +  `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/apps/${request.appName}`
+             `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/apps/${request.appName}`
         )
         .then((res) => {
             return res.data;
@@ -115,7 +115,7 @@ const deleteApp = (request) => {
 const createCompositeProfile = (request) => {
     return axios
         .post(
-           composite-apps +  `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/composite-profiles`,
+             `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/composite-profiles`,
             request.payload
         )
         .then((res) => res.data);
@@ -123,21 +123,21 @@ const createCompositeProfile = (request) => {
 const getCompositeProfiles = (request) => {
     return axios
         .get(
-            composite-apps + `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/composite-profiles`
+             `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/composite-profiles`
         )
         .then((res) => res.data);
 };
 const deleteCompositeProfile = (request) => {
     return axios
         .delete(
-           composite-apps +  `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/composite-profiles/${request.compositeProfileName}`
+            `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/composite-profiles/${request.compositeProfileName}`
         )
         .then((res) => res.data);
 };
 const addProfile = (request) => {
     return axios
         .post(
-          composite-apps +   `/v2/projects/${request.get("projectName")}/composite-apps/${request.get(
+             `/v2/projects/${request.get("projectName")}/composite-apps/${request.get(
                 "compositeAppName"
             )}/${request.get("compositeAppVersion")}/composite-profiles/${request.get(
                 "compositeProfileName"
@@ -151,14 +151,14 @@ const addProfile = (request) => {
 const getProfiles = (request) => {
     return axios
         .get(
-           composite-apps +  `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/composite-profiles/${request.compositeProfileName}/profiles`
+             `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/composite-profiles/${request.compositeProfileName}/profiles`
         )
         .then((res) => res.data);
 };
 const deleteProfile = (request) => {
     return axios
         .delete(
-            composite-apps + `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/composite-profiles/${request.compositeProfileName}/profiles/${request.profileName}`
+            `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/composite-profiles/${request.compositeProfileName}/profiles/${request.profileName}`
         )
         .then((res) => res.data);
 };
@@ -167,14 +167,14 @@ const deleteProfile = (request) => {
 const getGenericPlacementIntents = (request) => {
     return axios
         .get(
-            composite-apps + `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/generic-placement-intents`
+             `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/generic-placement-intents`
         )
         .then((res) => res.data);
 };
 const createGenericPlacementIntent = (request) => {
     return axios
         .post(
-            composite-apps +  `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/generic-placement-intents`,
+             `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/generic-placement-intents`,
             request.payload
         )
         .then((res) => res.data);
@@ -182,21 +182,21 @@ const createGenericPlacementIntent = (request) => {
 const deleteGenericPlacementIntent = (request) => {
     return axios
         .delete(
-           composite-apps +  `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/generic-placement-intents/${request.genericPlacementIntentName}`
+            `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/generic-placement-intents/${request.genericPlacementIntentName}`
         )
         .then((res) => res.data);
 };
 const getAppPlacementIntents = (request) => {
     return axios
         .get(
-           composite-apps +  `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/generic-placement-intents/${request.genericPlacementIntentName}/app-intents`
+             `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/generic-placement-intents/${request.genericPlacementIntentName}/app-intents`
         )
         .then((res) => res.data);
 };
 const addAppPlacementIntent = (request) => {
     return axios
         .post(
-           composite-apps +  `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/generic-placement-intents/${request.genericPlacementIntentName}/app-intents`,
+             `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/generic-placement-intents/${request.genericPlacementIntentName}/app-intents`,
             request.payload
         )
         .then((res) => res.data);
@@ -204,7 +204,7 @@ const addAppPlacementIntent = (request) => {
 const deleteAppPlacementIntent = (request) => {
     return axios
         .delete(
-           composite-apps +  `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/generic-placement-intents/${request.genericPlacementIntentName}/app-intents/${request.appPlacementIntentName}`
+            `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/generic-placement-intents/${request.genericPlacementIntentName}/app-intents/${request.appPlacementIntentName}`
         )
         .then((res) => res.data);
 };
