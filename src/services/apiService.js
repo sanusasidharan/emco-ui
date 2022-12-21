@@ -551,7 +551,7 @@ const terminateNetworkConfig = (request) => {
 
 //controller
 const getControllers = () => {
-    return axios.get(orchestrator_endpoint +  "/v2/controller").then((res) => {
+    return axios.get(orchestrator_endpoint +  "/v2/controllers").then((res) => {
         return res.data
     });
 };
