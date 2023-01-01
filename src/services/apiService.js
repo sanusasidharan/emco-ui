@@ -10,36 +10,29 @@
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
-// limitations under the License. Test commit
+// limitations under the License.
 // ========================================================================
 import axios from "axios";
 
-//axios.defaults.baseURL = process.env.REACT_APP_BACKEND || "";
+axios.defaults.baseURL =  "http://istio-gateway.apps.infy-rh-telco.01ub.p1.openshiftapps.com" ;
 //orchestrator
 //projects
-
-let orchestrator_endpoint = "https://orchestrator-routes-emco.apps.infy-rh-telco.01ub.p1.openshiftapps.com" ;
-let clm_endpoint = "https://clm-routes-emco.apps.infy-rh-telco.01ub.p1.openshiftapps.com" ;
-let network_ncm = "https://ncm-routes-emco.apps.infy-rh-telco.01ub.p1.openshiftapps.com" ;
-let ovnaction_endpoint  =   "https://clm-routes-emco.apps.infy-rh-telco.01ub.p1.openshiftapps.com" ;
-let dtc_endpoint  = "https://dtc-routes-emco.apps.infy-rh-telco.01ub.p1.openshiftapps.com"  ;
-let dcm_endpoint  =  "https://dcm-routes-emco.apps.infy-rh-telco.01ub.p1.openshiftapps.com" ;
 const createProject = (request) => {
-    return axios.post(orchestrator_endpoint + "/v2/projects", {...request}).then((res) => res.data);
+    return axios.post("/v2/projects", {...request}).then((res) => res.data);
 };
 const updateProject = (request) => {
     return axios
-        .put(orchestrator_endpoint + `/v2/projects/${request.metadata.name}`, {...request})
+        .put(`/v2/projects/${request.metadata.name}`, {...request})
         .then((res) => res.data);
 };
 const deleteProject = (projectName) => {
-    return axios.delete(orchestrator_endpoint + `/v2/projects/${projectName}`).then((res) => res.data);
+    return axios.delete(`/v2/projects/${projectName}`).then((res) => res.data);
 };
 const getProjectDetails = (projectName) => {
-    return axios.get(orchestrator_endpoint + `/v2/projects/${projectName}`).then((res) => res.data);
+    return axios.get(`/v2/projects/${projectName}`).then((res) => res.data);
 };
 const getAllProjects = () => {
-    return axios.get(orchestrator_endpoint + "/v2/projects").then((response) => {
+    return axios.get("/v2/projects").then((response) => {
         return response.data;
     });
 };
@@ -47,7 +40,7 @@ const getAllProjects = () => {
 //composite apps
 const getCompositeApps = (request) => {
     return axios
-        .get(orchestrator_endpoint + `/v2/projects/${request.projectName}/composite-apps`)
+        .get(`/v2/projects/${request.projectName}/composite-apps`)
         .then((res) => {
             return res.data;
         });
@@ -55,7 +48,7 @@ const getCompositeApps = (request) => {
 
 const createCompositeApp = ({projectName, ...request}) => {
     return axios
-        .post(orchestrator_endpoint + `/v2/projects/${projectName}/composite-apps`, request.payload)
+        .post(`/v2/projects/${projectName}/composite-apps`, request.payload)
         .then((res) => {
             return res.data;
         });
@@ -63,7 +56,7 @@ const createCompositeApp = ({projectName, ...request}) => {
 const updateCompositeApp = (request) => {
     return axios
         .put(
-            orchestrator_endpoint + `/v2/projects/${request.projectName}/composite-apps/${request.payload.name}/${request.compositeAppVersion}`,
+            `/v2/projects/${request.projectName}/composite-apps/${request.payload.name}/${request.compositeAppVersion}`,
             request.payload
         )
         .then((res) => {
@@ -75,7 +68,7 @@ const updateCompositeApp = (request) => {
 const getApps = (request) => {
     return axios
         .get(
-              orchestrator_endpoint + `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/apps`
+            `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/apps`
         )
         .then((res) => {
             return res.data;
@@ -84,7 +77,7 @@ const getApps = (request) => {
 const addApp = (request) => {
     return axios
         .post(
-             orchestrator_endpoint + `/v2/projects/${request.get("projectName")}/composite-apps/${request.get(
+            `/v2/projects/${request.get("projectName")}/composite-apps/${request.get(
                 "compositeAppName"
             )}/${request.get("compositeAppVersion")}/apps`,
             request
@@ -96,7 +89,7 @@ const addApp = (request) => {
 const updateApp = (request) => {
     return axios
         .put(
-             orchestrator_endpoint + `/v2/projects/${request.get("projectName")}/composite-apps/${request.get(
+            `/v2/projects/${request.get("projectName")}/composite-apps/${request.get(
                 "compositeAppName"
             )}/${request.get("compositeAppVersion")}/apps/${request.get("appName")}`,
             request
@@ -108,7 +101,7 @@ const updateApp = (request) => {
 const deleteApp = (request) => {
     return axios
         .delete(
-             orchestrator_endpoint + `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/apps/${request.appName}`
+            `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/apps/${request.appName}`
         )
         .then((res) => {
             return res.data;
@@ -119,7 +112,7 @@ const deleteApp = (request) => {
 const createCompositeProfile = (request) => {
     return axios
         .post(
-             orchestrator_endpoint + `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/composite-profiles`,
+            `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/composite-profiles`,
             request.payload
         )
         .then((res) => res.data);
@@ -127,21 +120,21 @@ const createCompositeProfile = (request) => {
 const getCompositeProfiles = (request) => {
     return axios
         .get(
-             orchestrator_endpoint + `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/composite-profiles`
+            `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/composite-profiles`
         )
         .then((res) => res.data);
 };
 const deleteCompositeProfile = (request) => {
     return axios
         .delete(
-            orchestrator_endpoint + `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/composite-profiles/${request.compositeProfileName}`
+            `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/composite-profiles/${request.compositeProfileName}`
         )
         .then((res) => res.data);
 };
 const addProfile = (request) => {
     return axios
         .post(
-             orchestrator_endpoint + `/v2/projects/${request.get("projectName")}/composite-apps/${request.get(
+            `/v2/projects/${request.get("projectName")}/composite-apps/${request.get(
                 "compositeAppName"
             )}/${request.get("compositeAppVersion")}/composite-profiles/${request.get(
                 "compositeProfileName"
@@ -155,14 +148,14 @@ const addProfile = (request) => {
 const getProfiles = (request) => {
     return axios
         .get(
-             orchestrator_endpoint + `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/composite-profiles/${request.compositeProfileName}/profiles`
+            `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/composite-profiles/${request.compositeProfileName}/profiles`
         )
         .then((res) => res.data);
 };
 const deleteProfile = (request) => {
     return axios
         .delete(
-            orchestrator_endpoint + `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/composite-profiles/${request.compositeProfileName}/profiles/${request.profileName}`
+            `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/composite-profiles/${request.compositeProfileName}/profiles/${request.profileName}`
         )
         .then((res) => res.data);
 };
@@ -171,14 +164,14 @@ const deleteProfile = (request) => {
 const getGenericPlacementIntents = (request) => {
     return axios
         .get(
-            orchestrator_endpoint + `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/generic-placement-intents`
+            `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/generic-placement-intents`
         )
         .then((res) => res.data);
 };
 const createGenericPlacementIntent = (request) => {
     return axios
         .post(
-             orchestrator_endpoint + `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/generic-placement-intents`,
+            `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/generic-placement-intents`,
             request.payload
         )
         .then((res) => res.data);
@@ -186,21 +179,21 @@ const createGenericPlacementIntent = (request) => {
 const deleteGenericPlacementIntent = (request) => {
     return axios
         .delete(
-            orchestrator_endpoint + `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/generic-placement-intents/${request.genericPlacementIntentName}`
+            `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/generic-placement-intents/${request.genericPlacementIntentName}`
         )
         .then((res) => res.data);
 };
 const getAppPlacementIntents = (request) => {
     return axios
         .get(
-            orchestrator_endpoint + `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/generic-placement-intents/${request.genericPlacementIntentName}/app-intents`
+            `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/generic-placement-intents/${request.genericPlacementIntentName}/app-intents`
         )
         .then((res) => res.data);
 };
 const addAppPlacementIntent = (request) => {
     return axios
         .post(
-             orchestrator_endpoint + `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/generic-placement-intents/${request.genericPlacementIntentName}/app-intents`,
+            `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/generic-placement-intents/${request.genericPlacementIntentName}/app-intents`,
             request.payload
         )
         .then((res) => res.data);
@@ -208,7 +201,7 @@ const addAppPlacementIntent = (request) => {
 const deleteAppPlacementIntent = (request) => {
     return axios
         .delete(
-            orchestrator_endpoint + `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/generic-placement-intents/${request.genericPlacementIntentName}/app-intents/${request.appPlacementIntentName}`
+            `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/generic-placement-intents/${request.genericPlacementIntentName}/app-intents/${request.appPlacementIntentName}`
         )
         .then((res) => res.data);
 };
@@ -217,7 +210,7 @@ const deleteAppPlacementIntent = (request) => {
 const getNetworkControllerIntents = (request) => {
     return axios
         .get(
-            ovnaction_endpoint + `/v2/ovnaction/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/network-controller-intent`
+            `/v2/ovnaction/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/network-controller-intent`
         )
         .then((res) => {
             return res.data;
@@ -226,7 +219,7 @@ const getNetworkControllerIntents = (request) => {
 const addNetworkControllerIntent = (request) => {
     return axios
         .post(
-            ovnaction_endpoint + `/v2/ovnaction/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/network-controller-intent`,
+            `/v2/ovnaction/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/network-controller-intent`,
             request.payload
         )
         .then((res) => {
@@ -236,7 +229,7 @@ const addNetworkControllerIntent = (request) => {
 const deleteNetworkControllerIntent = (request) => {
     return axios
         .delete(
-            ovnaction_endpoint + `/v2/ovnaction/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/network-controller-intent/${request.networkControllerIntentName}`
+            `/v2/ovnaction/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/network-controller-intent/${request.networkControllerIntentName}`
         )
         .then((res) => {
             return res.data;
@@ -245,7 +238,7 @@ const deleteNetworkControllerIntent = (request) => {
 const getWorkloadIntents = (request) => {
     return axios
         .get(
-            ovnaction_endpoint + `/v2/ovnaction/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/network-controller-intent/${request.networkControllerIntentName}/workload-intents`
+            `/v2/ovnaction/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/network-controller-intent/${request.networkControllerIntentName}/workload-intents`
         )
         .then((res) => {
             return res.data;
@@ -254,7 +247,7 @@ const getWorkloadIntents = (request) => {
 const addWorkloadIntent = (request) => {
     return axios
         .post(
-            ovnaction_endpoint + `/v2/ovnaction/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/network-controller-intent/${request.networkControllerIntentName}/workload-intents`,
+            `/v2/ovnaction/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/network-controller-intent/${request.networkControllerIntentName}/workload-intents`,
             request.payload
         )
         .then((res) => {
@@ -264,7 +257,7 @@ const addWorkloadIntent = (request) => {
 const deleteWorkloadIntent = (request) => {
     return axios
         .delete(
-            ovnaction_endpoint + `/v2/ovnaction/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/network-controller-intent/${request.networkControllerIntentName}/workload-intents/${request.workloadIntentName}`
+            `/v2/ovnaction/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/network-controller-intent/${request.networkControllerIntentName}/workload-intents/${request.workloadIntentName}`
         )
         .then((res) => {
             return res.data;
@@ -273,7 +266,7 @@ const deleteWorkloadIntent = (request) => {
 const getInterfaces = (request) => {
     return axios
         .get(
-            ovnaction_endpoint + `/v2/ovnaction/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/network-controller-intent/${request.networkControllerIntentName}/workload-intents/${request.workloadIntentName}/interfaces`
+            `/v2/ovnaction/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/network-controller-intent/${request.networkControllerIntentName}/workload-intents/${request.workloadIntentName}/interfaces`
         )
         .then((res) => {
             return res.data;
@@ -282,7 +275,7 @@ const getInterfaces = (request) => {
 const addInterface = (request) => {
     return axios
         .post(
-            ovnaction_endpoint + `/v2/ovnaction/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/network-controller-intent/${request.networkControllerIntentName}/workload-intents/${request.workloadIntentName}/interfaces`,
+            `/v2/ovnaction/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/network-controller-intent/${request.networkControllerIntentName}/workload-intents/${request.workloadIntentName}/interfaces`,
             request.payload
         )
         .then((res) => {
@@ -292,7 +285,7 @@ const addInterface = (request) => {
 const deleteInterface = (request) => {
     return axios
         .delete(
-            ovnaction_endpoint + `/v2/ovnaction/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/network-controller-intent/${request.networkControllerIntentName}/workload-intents/${request.workloadIntentName}/interfaces/${request.interfaceName}`
+            `/v2/ovnaction/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/network-controller-intent/${request.networkControllerIntentName}/workload-intents/${request.workloadIntentName}/interfaces/${request.interfaceName}`
         )
         .then((res) => {
             return res.data;
@@ -303,7 +296,7 @@ const deleteInterface = (request) => {
 const addIntentsToDeploymentIntentGroup = (request) => {
     return axios
         .post(
-           orchestrator_endpoint + `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/deployment-intent-groups/${request.deploymentIntentGroupName}/intents`,
+            `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/deployment-intent-groups/${request.deploymentIntentGroupName}/intents`,
             request.payload
         )
         .then((res) => {
@@ -313,7 +306,7 @@ const addIntentsToDeploymentIntentGroup = (request) => {
 const editDeploymentIntentGroup = (request) => {
     return axios
         .put(
-            orchestrator_endpoint + `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/deployment-intent-groups/${request.deploymentIntentGroupName}`,
+            `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/deployment-intent-groups/${request.deploymentIntentGroupName}`,
             request.payload
         )
         .then((res) => {
@@ -323,7 +316,7 @@ const editDeploymentIntentGroup = (request) => {
 const getDeploymentIntentGroupIntents = (request) => {
     return axios
         .get(
-            orchestrator_endpoint + `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/deployment-intent-groups/${request.deploymentIntentGroupName}/intents`
+            `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/deployment-intent-groups/${request.deploymentIntentGroupName}/intents`
         )
         .then((res) => {
             return res.data;
@@ -332,7 +325,7 @@ const getDeploymentIntentGroupIntents = (request) => {
 const approveDeploymentIntentGroup = (request) => {
     return axios
         .post(
-            orchestrator_endpoint + `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/deployment-intent-groups/${request.deploymentIntentGroupName}/approve`
+            `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/deployment-intent-groups/${request.deploymentIntentGroupName}/approve`
         )
         .then((res) => {
             return res.data;
@@ -341,7 +334,7 @@ const approveDeploymentIntentGroup = (request) => {
 const instantiate = (request) => {
     return axios
         .post(
-           orchestrator_endpoint +  `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/deployment-intent-groups/${request.deploymentIntentGroupName}/instantiate`
+            `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/deployment-intent-groups/${request.deploymentIntentGroupName}/instantiate`
         )
         .then((res) => {
             return res.data;
@@ -351,24 +344,24 @@ const instantiate = (request) => {
 const terminateDeploymentIntentGroup = (request) => {
     return axios
         .post(
-            orchestrator_endpoint + `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/deployment-intent-groups/${request.deploymentIntentGroupName}/terminate`
+            `/v2/projects/${request.projectName}/composite-apps/${request.compositeAppName}/${request.compositeAppVersion}/deployment-intent-groups/${request.deploymentIntentGroupName}/terminate`
         )
         .then((res) => res.data);
 };
 //cluster-clm
 const getClusterProviders = () => {
-    return axios.get(clm_endpoint  + "/v2/cluster-providers").then((res) => {
+    return axios.get("/v2/cluster-providers").then((res) => {
         return res.data;
     });
 };
 const getClusterProvider = (providerName) => {
-    return axios.get(clm_endpoint + `/v2/cluster-providers/${providerName}`).then((res) => {
+    return axios.get(`/v2/cluster-providers/${providerName}`).then((res) => {
         return res.data;
     });
 };
 const getClusters = (providerName) => {
     return axios
-        .get(clm_endpoint + `/v2/cluster-providers/${providerName}/clusters`)
+        .get(`/v2/cluster-providers/${providerName}/clusters`)
         .then((res) => {
             return res.data;
         });
@@ -376,7 +369,7 @@ const getClusters = (providerName) => {
 
 const getClustersByLabel = (providerName, label) => {
     return axios
-        .get(clm_endpoint + `/v2/cluster-providers/${providerName}/clusters`, {
+        .get(`/v2/cluster-providers/${providerName}/clusters`, {
             params: {label: `${label}`},
         })
         .then((res) => {
@@ -384,18 +377,18 @@ const getClustersByLabel = (providerName, label) => {
         });
 };
 const registerClusterProvider = (request) => {
-    return axios.post(clm_endpoint + `/v2/cluster-providers`, {...request}).then((res) => {
+    return axios.post(`/v2/cluster-providers`, {...request}).then((res) => {
         return res.data;
     });
 };
 const deleteClusterProvider = (providerName) => {
-    return axios.delete(clm_endpoint + `/v2/cluster-providers/${providerName}`).then((res) => {
+    return axios.delete(`/v2/cluster-providers/${providerName}`).then((res) => {
         return res.data;
     });
 };
 const updateClusterProvider = (request) => {
     return axios
-        .put(clm_endpoint + `/v2/cluster-providers/${request.providerName}`, request.payload)
+        .put(`/v2/cluster-providers/${request.providerName}`, request.payload)
         .then((res) => {
             return res.data;
         });
@@ -403,7 +396,7 @@ const updateClusterProvider = (request) => {
 const updateCluster = (request) => {
     return axios
         .put(
-            clm_endpoint+ `/v2/cluster-providers/${request.get("providerName")}/clusters/${
+            `/v2/cluster-providers/${request.get("providerName")}/clusters/${
                 JSON.parse(request.get("metadata")).metadata.name
             }`,
             request
@@ -415,7 +408,7 @@ const updateCluster = (request) => {
 const addClusterLabel = (request) => {
     return axios
         .post(
-            clm_endpoint + `/v2/cluster-providers/${request.providerName}/clusters/${request.clusterName}/labels`,
+            `/v2/cluster-providers/${request.providerName}/clusters/${request.clusterName}/labels`,
             request.payload
         )
         .then((res) => {
@@ -425,7 +418,7 @@ const addClusterLabel = (request) => {
 const getClusterLabels = (request) => {
     return axios
         .get(
-           clm_endpoint +  `/v2/cluster-providers/${request.providerName}/clusters/${request.clusterName}/labels`
+            `/v2/cluster-providers/${request.providerName}/clusters/${request.clusterName}/labels`
         )
         .then((res) => {
             return res.data;
@@ -435,7 +428,7 @@ const getClusterLabels = (request) => {
 const deleteClusterLabel = (request) => {
     return axios
         .delete(
-            clm_endpoint + `/v2/cluster-providers/${request.providerName}/clusters/${request.clusterName}/labels/${request.clusterLabel}`,
+            `/v2/cluster-providers/${request.providerName}/clusters/${request.clusterName}/labels/${request.clusterLabel}`,
             request.payload
         )
         .then((res) => {
@@ -445,7 +438,7 @@ const deleteClusterLabel = (request) => {
 const deleteCluster = (request) => {
     return axios
         .delete(
-           clm_endpoint + `/v2/cluster-providers/${request.providerName}/clusters/${request.clusterName}`
+            `/v2/cluster-providers/${request.providerName}/clusters/${request.clusterName}`
         )
         .then((res) => {
             return res.data;
@@ -453,13 +446,13 @@ const deleteCluster = (request) => {
 };
 
 const getAllKvPairs = (request) => {
-    return axios.get(clm_endpoint + `/v2/cluster-providers/${request.providerName}/clusters/${request.clusterName}/kv-pairs`).then((res) => res.data);
+    return axios.get(`/v2/cluster-providers/${request.providerName}/clusters/${request.clusterName}/kv-pairs`).then((res) => res.data);
 }
 
 const createKvPair = (request) => {
     return axios
         .post(
-            clm_endpoint + `/v2/cluster-providers/${request.providerName}/clusters/${request.clusterName}/kv-pairs`,
+            `/v2/cluster-providers/${request.providerName}/clusters/${request.clusterName}/kv-pairs`,
             request.payload
         )
         .then((res) => {
@@ -470,7 +463,7 @@ const createKvPair = (request) => {
 const updateKvPair = (request) => {
     return axios
         .put(
-            clm_endpoint + `/v2/cluster-providers/${request.providerName}/clusters/${request.clusterName}/kv-pairs/${request.kvPairName}`,
+            `/v2/cluster-providers/${request.providerName}/clusters/${request.clusterName}/kv-pairs/${request.kvPairName}`,
             request.payload
         )
         .then((res) => {
@@ -481,17 +474,17 @@ const updateKvPair = (request) => {
 const deleteKvPair = (request) => {
     return axios
         .delete(
-            clm_endpoint + `/v2/cluster-providers/${request.providerName}/clusters/${request.clusterName}/kv-pairs/${request.kvPairName}`)
+            `/v2/cluster-providers/${request.providerName}/clusters/${request.clusterName}/kv-pairs/${request.kvPairName}`)
         .then((res) => {
             return res.data;
         });
 }
 
-//network_ncm
+//network-ncm
 const getClusterProviderNetworks = (request) => {
     return axios
         .get(
-            network_ncm + `/v2/ncm/${request.providerName}/clusters/${request.clusterName}/provider-networks`
+            `/v2/ncm/${request.providerName}/clusters/${request.clusterName}/provider-networks`
         )
         .then((res) => {
             return res.data;
@@ -501,7 +494,7 @@ const getClusterProviderNetworks = (request) => {
 const getClusterNetworks = (request) => {
     return axios
         .get(
-            network_ncm + `/v2/ncm/${request.providerName}/clusters/${request.clusterName}/networks`
+            `/v2/ncm/${request.providerName}/clusters/${request.clusterName}/networks`
         )
         .then((res) => {
             return res.data;
@@ -511,7 +504,7 @@ const getClusterNetworks = (request) => {
 const addNetwork = (request) => {
     return axios
         .post(
-            network_ncm + `/v2/ncm/${request.providerName}/clusters/${request.clusterName}/${request.networkType}`,
+            `/v2/ncm/${request.providerName}/clusters/${request.clusterName}/${request.networkType}`,
             request.payload
         )
         .then((res) => {
@@ -522,7 +515,7 @@ const addNetwork = (request) => {
 const deleteClusterNetwork = (request) => {
     return axios
         .delete(
-            network_ncm + `/v2/ncm/${request.providerName}/clusters/${request.clusterName}/${request.networkType}/${request.networkName}`
+            `/v2/ncm/${request.providerName}/clusters/${request.clusterName}/${request.networkType}/${request.networkName}`
         )
         .then((res) => {
             return res.data;
@@ -531,7 +524,7 @@ const deleteClusterNetwork = (request) => {
 const applyNetworkConfig = (request) => {
     return axios
         .post(
-            network_ncm + `/v2/ncm/${request.providerName}/clusters/${request.clusterName}/apply`,
+            `/v2/ncm/${request.providerName}/clusters/${request.clusterName}/apply`,
             request.payload
         )
         .then((res) => {
@@ -541,7 +534,7 @@ const applyNetworkConfig = (request) => {
 const terminateNetworkConfig = (request) => {
     return axios
         .post(
-            network_ncm + `/v2/ncm/${request.providerName}/clusters/${request.clusterName}/terminate`,
+            `/v2/ncm/${request.providerName}/clusters/${request.clusterName}/terminate`,
             request.payload
         )
         .then((res) => {
@@ -551,36 +544,36 @@ const terminateNetworkConfig = (request) => {
 
 //controller
 const getControllers = () => {
-    return axios.get(orchestrator_endpoint +  "/v2/controllers").then((res) => {
-        return res.data
+    return axios.get(`/v2/controllers`).then((res) => {
+        return res.data;
     });
 };
 
 const addController = (request) => {
-    return axios.post(orchestrator_endpoint + `/v2/controllers`, request).then((res) => {
+    return axios.post(`/v2/controllers`, request).then((res) => {
         return res.data;
     });
 };
 
 const addITSController = (request) => {
-    return axios.post(dtc_endpoint + `/v2/dtc-controllers`, request).then((res) => {
+    return axios.post(`/v2/dtc-controllers`, request).then((res) => {
         return res.data;
     });
 }
 const updateController = (request) => {
-    return axios.put(orchestrator_endpoint + `/v2/controllers`, request).then((res) => {
+    return axios.put(`/v2/controllers`, request).then((res) => {
         return res.data;
     });
 };
 
 const removeITSController = () => {
-    return axios.delete(dtc_endpoint + `/v2/dtc-controllers/its`).then((res) => {
+    return axios.delete(`/v2/dtc-controllers/its`).then((res) => {
         return res.data;
     });
 };
 
 const removeController = (controllerName) => {
-    return axios.delete(orchestrator_endpoint + `/v2/controllers/${controllerName}`).then((res) => {
+    return axios.delete(`/v2/controllers/${controllerName}`).then((res) => {
         return res.data;
     });
 };
@@ -618,14 +611,14 @@ const executeWorkflow = ({type, ...request}) => {
 //DCM
 const getLogicalClouds = (projectName) => {
     return axios
-        .get(dcm_endpoint + `/v2/dcm/projects/${projectName}/logical-clouds`)
+        .get(`/v2/dcm/projects/${projectName}/logical-clouds`)
         .then((res) => res.data);
 };
 
 const getLogicalCloudClusterReferences = (request) => {
     return axios
         .get(
-            dcm_endpoint + `/v2/dcm/projects/${request.projectName}/logical-clouds/${request.logicalCloudName}/cluster-references`
+            `/v2/dcm/projects/${request.projectName}/logical-clouds/${request.logicalCloudName}/cluster-references`
         )
         .then((res) => res.data);
 };
@@ -633,7 +626,7 @@ const getLogicalCloudClusterReferences = (request) => {
 const terminateLogicalCloud = (request) => {
     return axios
         .post(
-            dcm_endpoint + `/v2/dcm/projects/${request.projectName}/logical-clouds/${request.logicalCloudName}/terminate`
+            `/v2/dcm/projects/${request.projectName}/logical-clouds/${request.logicalCloudName}/terminate`
         )
         .then((res) => res.data);
 };
@@ -641,13 +634,13 @@ const terminateLogicalCloud = (request) => {
 const deleteLogicalCloudClusterReference = (request) => {
     return axios
         .delete(
-            dcm_endpoint + `/v2/dcm/projects/${request.projectName}/logical-clouds/${request.logicalCloudName}/cluster-references/${request.clusterReferenceName}`
+            `/v2/dcm/projects/${request.projectName}/logical-clouds/${request.logicalCloudName}/cluster-references/${request.clusterReferenceName}`
         )
         .then((res) => res.data);
 };
 
 const deleteLogicalCloud = (request) => {
-    let deleteUrl = dcm_endpoint + `/v2/dcm/projects/${request.projectName}/logical-clouds/${request.logicalCloudName}`;
+    let deleteUrl = `/v2/dcm/projects/${request.projectName}/logical-clouds/${request.logicalCloudName}`;
     return axios.delete(deleteUrl);
 };
 
