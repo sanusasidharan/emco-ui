@@ -14,7 +14,7 @@
 // ========================================================================
 import axios from "axios";
 
-axios.defaults.baseURL =  "http://istio-gateway.apps.infy-rh-telco.01ub.p1.openshiftapps.com" ;
+axios.defaults.baseURL =  "http://istio-gateway.apps.infy-rhel-telco.658m.p1.openshiftapps.com" ;
 //orchestrator
 //projects
 const createProject = (request) => {
