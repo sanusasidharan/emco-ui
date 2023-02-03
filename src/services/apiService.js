@@ -611,14 +611,14 @@ const executeWorkflow = ({type, ...request}) => {
 //DCM
 const getLogicalClouds = (projectName) => {
     return axios
-        .get(`/middleend/projects/${projectName}/logical-clouds`)
+        .get(`/v2/dcm/projects/${projectName}/logical-clouds`)
         .then((res) => res.data);
 };
 
 const getLogicalCloudClusterReferences = (request) => {
     return axios
         .get(
-            `/middleend/projects/${request.projectName}/logical-clouds/${request.logicalCloudName}/cluster-references`
+            `/v2/dcm/projects/${request.projectName}/logical-clouds/${request.logicalCloudName}/cluster-references`
         )
         .then((res) => res.data);
 };
@@ -626,7 +626,7 @@ const getLogicalCloudClusterReferences = (request) => {
 const terminateLogicalCloud = (request) => {
     return axios
         .post(
-            `/middleend/projects/${request.projectName}/logical-clouds/${request.logicalCloudName}/terminate`
+            `/v2/dcm/projects/${request.projectName}/logical-clouds/${request.logicalCloudName}/terminate`
         )
         .then((res) => res.data);
 };
@@ -634,13 +634,13 @@ const terminateLogicalCloud = (request) => {
 const deleteLogicalCloudClusterReference = (request) => {
     return axios
         .delete(
-            `/middleend/projects/${request.projectName}/logical-clouds/${request.logicalCloudName}/cluster-references/${request.clusterReferenceName}`
+            `/v2/dcm/projects/${request.projectName}/logical-clouds/${request.logicalCloudName}/cluster-references/${request.clusterReferenceName}`
         )
         .then((res) => res.data);
 };
 
 const deleteLogicalCloud = (request) => {
-    let deleteUrl = `/middleend/projects/${request.projectName}/logical-clouds/${request.logicalCloudName}`;
+    let deleteUrl = `/v2/dcm/projects/${request.projectName}/logical-clouds/${request.logicalCloudName}`;
     return axios.delete(deleteUrl);
 };
 
