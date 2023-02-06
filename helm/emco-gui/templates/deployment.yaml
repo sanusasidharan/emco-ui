@@ -1,0 +1,90 @@
+#=======================================================================
+# Copyright (c) 2017-2020 Aarna Networks, Inc.
+# All rights reserved.
+# ======================================================================
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#           http://www.apache.org/licenses/LICENSE-2.0
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========================================================================  
+# middleend Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.middleend.service.name }} 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.middleend.service.label }} 
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.middleend.service.label }} 
+    spec:
+      containers:
+        - name: {{ .Values.middleend.service.name }} 
+          image: "{{ .Values.middleend.image.repository }}:{{ .Values.middleend.image.tag }}"
+          imagePullPolicy: "{{ .Values.middleend.image.pullPolicy }}"
+          env:
+           {{- if (lookup "v1" "Secret" "emco" "emco-mongo") }} 
+            - name: DB_EMCOUI_USERNAME
+              value: "emcoui"
+            - name: DB_EMCOUI_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: emcoui-mongo
+                  key: userPassword
+           {{- end }} 
+          ports:
+          - containerPort: {{ .Values.middleend.service.internalPort }} 
+          volumeMounts:
+          - mountPath: /opt/emco/config
+            readOnly: true
+            name: config 
+      volumes:
+      - name: config 
+        configMap:
+          name: middleend-config
+
+---
+# GUI Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.emcogui.service.name }} 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.emcogui.service.label }} 
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.emcogui.service.label }} 
+    spec:
+      containers:
+        - name: {{ .Values.emcogui.service.name }} 
+          image: "{{ .Values.emcogui.image.repository }}:{{ .Values.emcogui.image.tag }}"
+          imagePullPolicy: "{{ .Values.middleend.image.pullPolicy }}"
+          ports:
+          - containerPort: {{ .Values.emcogui.service.internalPort }} 
+          volumeMounts:
+          - mountPath: /usr/share/nginx/html/static/jsenv
+            name: envconfig
+            readOnly: true
+          - mountPath: /etc/nginx/conf.d 
+            readOnly: true
+            name: config 
+      volumes:
+      - name: config 
+        configMap:
+          name: emcogui-config
+      - name: envconfig 
+        configMap:
+          name: emcoenv-config

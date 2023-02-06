@@ -1,0 +1,88 @@
+body {
+    text-align: center;
+    padding: 24px 24px 96px;
+    background-color: #eaeff1 !important;
+    font-family: "Allerta", serif !important;
+}
+
+h1,
+h2 {
+    margin-bottom: 48px;
+    font-weight: normal;
+}
+
+.button {
+    width: auto;
+    display: inline-block;
+    padding: 0 18px 0 6px;
+    border: 0 none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: all 250ms linear;
+}
+
+.button:hover {
+    text-decoration: none;
+}
+
+.button--social-login {
+    margin-bottom: 12px;
+    color: white !important;
+    height: 40px;
+    line-height: 33px;
+    position: relative;
+    text-align: center;
+}
+
+.button--social-login .icon {
+    margin-right: 12px;
+    font-size: 22px;
+    line-height: 22px;
+    width: 42px;
+    height: 22px;
+    text-align: center;
+    display: inline-block;
+    position: relative;
+    top: 4px;
+}
+
+.button--social-login .icon:before {
+    display: inline-block;
+    width: 40px;
+}
+
+.button--social-login .icon:after {
+    content: "";
+}
+
+h2 {
+    flex-direction: row;
+}
+
+h4:before,
+h4:after {
+    content: "";
+    flex: 1 1;
+    border-bottom: 2px solid #0000001f;
+    margin: auto;
+}
+
+#amcop_logo > img {
+    height: 55px;
+}
+
+#signin-container {
+    width: 550px;
+}
+
+.paper {
+    border-radius: 10px;
+}
+
+.input-group-text {
+    height: 100%;
+}
+
+#signout > a > img {
+    height: 46px;
+}

@@ -1,0 +1,60 @@
+#=======================================================================
+# Copyright (c) 2017-2020 Aarna Networks, Inc.
+# All rights reserved.
+# ======================================================================
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#           http://www.apache.org/licenses/LICENSE-2.0
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========================================================================  
+# authgw Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.authgw.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.authgw.label }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.authgw.label }}
+    spec:
+      containers:
+        - name: {{ .Values.authgw.name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: Always
+          env:
+           {{- if (lookup "v1" "Secret" "emco" "emco-mongo") }} 
+            - name: DB_EMCOUI_USERNAME
+              value: "emcoui"
+            - name: DB_EMCOUI_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: emcoui-mongo
+                  key: userPassword
+           {{- end }} 
+            - name: MONGODB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: authgw-configmap
+                  key: mongodb_host
+            - name: API_PROXY_TARGET
+              valueFrom:
+                configMapKeyRef:
+                  name: authgw-configmap 
+                  key: api_proxy_target 
+            - name: UI_PROXY_TARGET
+              valueFrom:
+                configMapKeyRef:
+                  name: authgw-configmap 
+                  key: ui_proxy_target 
+          ports:
+            - containerPort: {{ .Values.authgw.internalPort }}
