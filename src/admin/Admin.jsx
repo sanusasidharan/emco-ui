@@ -16,6 +16,7 @@ import React, { useState } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Navigator from "../common/Navigator";
 import Header from "../appbase/Header";
+import Footer from "../appbase/Footer";
 import theme from "../theme/Theme";
 import Projects from "./projects/Projects";
 import Users from "./users/Users";
@@ -40,6 +41,10 @@ const useAppStyles = makeStyles({
     flex: 1,
     padding: theme.spacing(3, 4, 6, 4),
     background: "#eaeff1",
+    width: "80%",
+    float: "right",
+    display: "inline-block",
+    marginLeft: "20%"'
   },
 });
 
@@ -52,9 +57,9 @@ const Admin = (props) => {
   return (
       <div className={classes.root}>
         <CssBaseline />
-        <Navigator menu={adminMenu} handleDrawerToggle={handleDrawerToggle} mobileOpen={mobileOpen}/>
         <div className={classes.app}>
           <Header onDrawerToggle={handleDrawerToggle} onChangePasswordClick={props.handlePasswordFormOpen}/>
+          <Navigator menu={adminMenu} handleDrawerToggle={handleDrawerToggle} mobileOpen={mobileOpen}/>
           <main
               className={classes.main}
               style={
@@ -104,6 +109,7 @@ const Admin = (props) => {
               />
             </Switch>
           </main>
+          <Footer/>
         </div>
       </div>
   );
