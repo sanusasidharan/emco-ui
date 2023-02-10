@@ -44,7 +44,7 @@ const useAppStyles = makeStyles({
     width: "80%",
     float: "right",
     display: "inline-block",
-    marginLeft: "20%"'
+    marginLeft: "20%"
   },
 });
 
