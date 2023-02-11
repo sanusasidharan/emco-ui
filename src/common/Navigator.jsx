@@ -28,8 +28,6 @@ import {makeStyles} from "@material-ui/styles";
 import theme from "../theme/Theme";
 
 const drawerWidth = 256;
-const drawerTtop = 60;
-const zIndex = 10;
 const useAppStyles = makeStyles({
   drawer: {
     [theme.breakpoints.up("sm")]: {
@@ -37,9 +35,6 @@ const useAppStyles = makeStyles({
       flexShrink: 0,
     },
   },
-  secondaryBar: {
-    zIndex: 0,
- },
   categoryHeader: {
     paddingTop: theme.spacing(2),
         paddingBottom: theme.spacing(2),
@@ -56,7 +51,7 @@ const useAppStyles = makeStyles({
     },
   },
   itemCategory: {
-    backgroundColor: "#fff",
+    backgroundColor: "#232f3e",
         boxShadow: "0 -1px 0 #404854 inset",
         paddingTop: theme.spacing(2),
         paddingBottom: theme.spacing(2),
@@ -70,12 +65,10 @@ const useAppStyles = makeStyles({
   },
   itemPrimary: {
     fontSize: "inherit",
-    color: "#000"
   },
   itemIcon: {
     minWidth: "auto",
         marginRight: theme.spacing(2),
-        color: "#000"
   },
   divider: {
     marginTop: theme.spacing(2),
@@ -92,7 +85,6 @@ const useAppStyles = makeStyles({
         color: theme.palette.common.white,
   },
   emcoLogo: { width: "140px", height:"auto", marginRight:"10px" },
-  listStyle: { marginTop: "30px"}
 });
 
 function Navbar ({ menu: categories, ...props }) {
@@ -113,8 +105,27 @@ function Navbar ({ menu: categories, ...props }) {
       open={props.open}
       onClose={props.onClose}
     >
-      <List className={classes.listStyle} disablePadding>
-       
+      <List disablePadding>
+        <Link style={{ textDecoration: "none" }} to="/">
+          <ListItem
+            className={clsx(
+              classes.item,
+              classes.itemCategory,
+              classes.itemCategoryEmcoLogo
+            )}
+          >
+            <ListItemText
+              classes={{
+                primary: classes.itemPrimary,
+              }}
+            >
+              <img className={classes.emcoLogo} src={emco_logo} alt="EMCO" />
+              <sub className={classes.version}>
+                {process.env.REACT_APP_VERSION}
+              </sub>
+            </ListItemText>
+          </ListItem>
+        </Link>
         {categories.map(({ id, children }) => (
           <React.Fragment key={id}>
             {children.map(({ id: childId, icon, url }) => (
@@ -148,6 +159,7 @@ function Navbar ({ menu: categories, ...props }) {
               </Link>
             ))}
 
+            <Divider className={classes.divider} />
           </React.Fragment>
         ))}
       </List>
@@ -161,7 +173,7 @@ const Navigator = (props) =>{
       <nav className={classes.drawer}>
         <Hidden smUp implementation="js">
           <Navbar
-              PaperProps={{ style: {  width: drawerWidth, top: drawerTtop, zIndex: zIndex } }}
+              PaperProps={{ style: { width: drawerWidth } }}
               variant="temporary"
               open={props.mobileOpen}
               onClose={props.handleDrawerToggle}
@@ -171,7 +183,7 @@ const Navigator = (props) =>{
         </Hidden>
         <Hidden xsDown implementation="js">
           <Navbar
-              PaperProps={{ style: { width: drawerWidth, top: drawerTtop, zIndex: zIndex } }}
+              PaperProps={{ style: { width: drawerWidth } }}
               variant="permanent"
               menu={props.menu}
               classes={classes}

@@ -20,8 +20,6 @@ import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
 import {withStyles} from "@material-ui/core/styles";
 import {withRouter,Link,matchPath} from "react-router-dom";
-import  infy_logo from "../assets/images/logo.png";
-import  infy_magic from "../assets/images/magic.png";
 import {
     Typography,
     Grid,
@@ -40,8 +38,6 @@ const lightColor = "rgba(255, 255, 255, 0.7)";
 const {ENABLE_RBAC} = window._env_ || {};
 const styles = (theme) => ({
     root: {
-        display: "inline-block",
-        height: "60px",
         boxShadow:
         "0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)",
     },
@@ -70,21 +66,7 @@ const styles = (theme) => ({
         '&:hover': {
             textDecoration: "underline",
         }
-      },
-      stylemagic : { top: "6px", position: "relative", width: "44px", height:"31px"},
-      stylelogo : { top: "6px", position: "relative", width: "124px", height:"auto", marginRight:"10px" },
-     spanlogo : {
-       fontSize: "22px",
-        bottom: "10px",
-        display: "inline-block",
-        position: "absolute"
-     },
-     divider : {
-        border: "1px solid white", height: "33px", width: "1px",
-        display: "inline-block",
-        marginTop: "10px",
-        marginRight: "10px"
-     }
+      }
 });
 
 const getBreadcrumbs = ({ routes, pathname }) => {
@@ -192,12 +174,9 @@ function Header(props) {
                 className={classes.root}
                 color="primary"
                 position="sticky"
-                elevation={0}>
-                <img className={classes.stylemagic} src={infy_magic} alt="Infy Logo" />
-               <img className={classes.stylelogo} src={infy_logo} alt="Infy Logo" />
-               <span className={classes.divider}></span>
-            <span className={classes.spanlogo}>  Edge Orchestrator</span>
-                {/* <Toolbar>
+                elevation={0}
+            >
+                <Toolbar>
                     <Grid
                         container
                         spacing={1}
@@ -249,7 +228,7 @@ function Header(props) {
                             </IconButton>
                         </Grid>}
                     </Grid>
-                </Toolbar> */}
+                </Toolbar>
             </AppBar>
         </React.Fragment>
     );

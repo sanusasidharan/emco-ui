@@ -16,7 +16,6 @@ import React, { useContext, useState } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Navigator from "../common/Navigator";
 import Header from "./Header";
-import Footer from "./Footer";
 import CompositeApps from "../compositeApps/CompositeApps";
 import CompositeApp from "../compositeApps/CompositeApp";
 import theme from "../theme/Theme";
@@ -45,10 +44,6 @@ const useAppStyles = makeStyles({
     flex: 1,
     padding: theme.spacing(3, 4, 6, 4),
     background: "#eaeff1",
-    width: "80%",
-    float: "right",
-    display: "inline-block",
-    marginLeft: "20%"
   },
 });
 
@@ -67,10 +62,9 @@ function AppBase(props) {
         {projectName && (
             <div className={classes.root}>
               <CssBaseline />
-             
+              <Navigator menu={tenantMenu} handleDrawerToggle={handleDrawerToggle} mobileOpen={mobileOpen}/>
               <div className={classes.app}>
                 <Header onDrawerToggle={handleDrawerToggle} onChangePasswordClick={props.handlePasswordFormOpen}/>
-                <Navigator menu={tenantMenu} handleDrawerToggle={handleDrawerToggle} mobileOpen={mobileOpen}/>
                 {!isAuthorized && <PageNotFound />}
                 {isAuthorized && (
                     <main className={classes.main}>
@@ -119,9 +113,7 @@ function AppBase(props) {
                         <Route path="/" component={() => <PageNotFound />} />
                       </Switch>
                     </main>
-                   
                 )}
-                 <Footer/>
               </div>
             </div>
         )}

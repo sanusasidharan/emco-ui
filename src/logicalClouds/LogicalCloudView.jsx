@@ -137,9 +137,7 @@ const LogicalCloudView = ({ open, handleClose, data, logicalCloud }) => {
                   bgcolor: "background.paper",
                 }}
               >
-                
-                 {
-                 /*logicalCloud.clusterReferences.spec.clusterProviders.map(
+                {logicalCloud.spec.clusterReferences.spec.clusterProviders.map(
                   (clusterProvider, index, arr) => (
                     <React.Fragment key={index}>
                       <ListItem alignItems="flex-start">
@@ -160,17 +158,7 @@ const LogicalCloudView = ({ open, handleClose, data, logicalCloud }) => {
                       ) : null}
                     </React.Fragment>
                   )
-                )*/
-                
-                // Changes made by Dipankar
-                <ListItem alignItems="flex-start">
-                        <ListItemText
-                          primary={`Name : ${logicalCloud.metadata.name}`}
-                          secondary={`Description : ${logicalCloud.metadata.description}` }
-                        />
-                </ListItem>
-                
-                }
+                )}
               </List>
             </Card>
             {logicalCloud.spec.level === "1" && (

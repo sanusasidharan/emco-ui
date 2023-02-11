@@ -87,7 +87,7 @@ const DeploymentIntentGroups = (props) => {
             payload = {...payload, ...others};
             payload.compositeApp = compositeApp.metadata.name;
             payload.compositeAppVersion = compositeAppSpec.compositeAppVersion;
-            payload.logicalCloud = logicalCloud.clusterReferences.metadata.name;
+            payload.logicalCloud = logicalCloud.spec.clusterReferences.metadata.name;
             formData.append("metadata", JSON.stringify(payload));
             let request = {
                 projectName: props.projectName,
@@ -127,11 +127,7 @@ const DeploymentIntentGroups = (props) => {
                     else setData([]);
                 })
                 .catch((err) => {
-                    if (err.response) {
-                        setData(err.response.data); 
-                    } else {
-                        console.log("error getting deplotment intent groups : ", err);
-                    }
+                    console.log("error getting deplotment intent groups : " + err);
                 })
                 .finally(() => setIsloading(false));
         };
