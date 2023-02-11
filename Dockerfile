@@ -18,6 +18,7 @@ FROM node:14.18.1-alpine as builder
 WORKDIR /app
 COPY package.json .
 COPY package-lock.json .
+RUN npm install -g npm@9.4.2
 RUN npm install
 COPY src ./src
 COPY public ./public
