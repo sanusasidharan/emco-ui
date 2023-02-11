@@ -15,8 +15,8 @@
 import React, { useContext, useState } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Navigator from "../common/Navigator";
-//import Header from "./Header";
-//import Footer from "./Footer";
+import Header from "./Header";
+import Footer from "./Footer";
 import CompositeApps from "../compositeApps/CompositeApps";
 import CompositeApp from "../compositeApps/CompositeApp";
 import theme from "../theme/Theme";
@@ -69,7 +69,7 @@ function AppBase(props) {
               <CssBaseline />
              
               <div className={classes.app}>
-                //<Header onDrawerToggle={handleDrawerToggle} onChangePasswordClick={props.handlePasswordFormOpen}/>
+                <Header onDrawerToggle={handleDrawerToggle} onChangePasswordClick={props.handlePasswordFormOpen}/>
                 <Navigator menu={tenantMenu} handleDrawerToggle={handleDrawerToggle} mobileOpen={mobileOpen}/>
                 {!isAuthorized && <PageNotFound />}
                 {isAuthorized && (
@@ -121,7 +121,7 @@ function AppBase(props) {
                     </main>
                    
                 )}
-                 //<Footer/>
+                 <Footer/>
               </div>
             </div>
         )}
