@@ -14,7 +14,7 @@
 # ========================================================================
 
 # => Build container
-FROM node:14.18.1-alpine as builder
+FROM node:18-alpine as builder
 WORKDIR /app
 COPY package.json .
 COPY package-lock.json .
