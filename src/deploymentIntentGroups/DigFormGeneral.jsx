@@ -92,7 +92,7 @@ function DigFormGeneral(props) {
       setIsLoading(false);
     } else {
       apiService
-        .getLogicalClouds(props.projectName)
+        /*.getLogicalClouds(props.projectName)
         .then((res) => {
           res.forEach((lc) => {
             lc.spec.clusterReferences.spec.clusterProviders.forEach((cp) => {
@@ -112,7 +112,34 @@ function DigFormGeneral(props) {
               });
               cp.spec.labels = [...labels];
             });
-          });
+          });*/
+
+
+          .getLogicalCloudsClusters(props.projectName)
+          .then((res) => {
+            res.forEach((lc) => {
+              lc.clusterReferences.spec.clusterProviders.forEach((cp) => {
+                //first get the values in a set so that we dont duplicate the labels, then add it to the array
+                let uniqueLabels = new Set();
+                let labels = [];
+                cp.spec.clusters.forEach((cluster) => {
+                  if (cluster.spec.labels && cluster.spec.labels.length > 0) {
+                      cluster.spec.labels.forEach((label) => {
+                      uniqueLabels.add(label.clusterLabel);
+                    });
+                  }
+                });
+                //create the required object array
+                uniqueLabels.forEach((label) => {
+                  labels.push({ clusterLabel: label });
+                });
+                cp.spec.labels = [...labels];
+              });
+            });
+
+
+
+
           setLogicalCloudData(res);
         })
         .catch((err) => {
@@ -368,9 +395,10 @@ function DigFormGeneral(props) {
                             logicalCloudData.map((logicalCloud) => (
                               <MenuItem
                                 value={logicalCloud}
-                                key={logicalCloud.spec.clusterReferences.metadata.name}
+                                //key={logicalCloud.spec.clusterReferences.metadata.name}
+                                key={logicalCloud.clusterReferences.metadata.name}
                               >
-                                {logicalCloud.spec.clusterReferences.metadata.name}
+                                {logicalCloud.clusterReferences.metadata.name}
                               </MenuItem>
                             ))}
                         </Select>

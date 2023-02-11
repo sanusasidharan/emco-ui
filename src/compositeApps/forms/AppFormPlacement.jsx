@@ -103,8 +103,8 @@ function AppFormPlacement({
           </Paper>
         </Grid>
         {logicalCloud &&
-          logicalCloud.spec.clusterReferences.spec.clusterProviders.length > 0 &&
-          logicalCloud.spec.clusterReferences.spec.clusterProviders.map((clusterProvider) => (
+          logicalCloud.clusterReferences.spec.clusterProviders.length > 0 &&
+          logicalCloud.clusterReferences.spec.clusterProviders.map((clusterProvider) => (
             <Grid key={clusterProvider.metadata.name} item xs={12}>
               <Paper>
                 {formikProps.values.apps[index].placementType === "clusters" ? (
