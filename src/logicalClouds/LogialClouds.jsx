@@ -29,10 +29,13 @@ const LogicalClouds = ({ projectName, ...props }) => {
   const [open, setOpen] = React.useState(false);
 
   useEffect(() => {
-    apiService
-      .getLogicalClouds(projectName)
-      .then((res) => {
-        setData(res);
+    Promise.all([
+      apiService.getLogicalClouds(projectName),
+      apiService.getLogicalCloudsClusters(projectName),
+    ])
+      .then((results) => {
+        const mResults=results[0].map ((ele, index) => { return {...ele, ...results[1][index]}})
+        setData(mResults);
       })
       .catch((err) => {
         console.error("error getting logical clouds", err);
