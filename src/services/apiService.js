@@ -484,7 +484,7 @@ const deleteKvPair = (request) => {
 const getClusterProviderNetworks = (request) => {
     return axios
         .get(
-            `/v2/ncm/${request.providerName}/clusters/${request.clusterName}/provider-networks`
+            `/v2/cluster-providers/${request.providerName}/clusters/${request.clusterName}/provider-networks`
         )
         .then((res) => {
             return res.data;
@@ -494,7 +494,7 @@ const getClusterProviderNetworks = (request) => {
 const getClusterNetworks = (request) => {
     return axios
         .get(
-            `/v2/ncm/${request.providerName}/clusters/${request.clusterName}/networks`
+            `/v2/cluster-providers/${request.providerName}/clusters/${request.clusterName}/networks`
         )
         .then((res) => {
             return res.data;
@@ -504,7 +504,7 @@ const getClusterNetworks = (request) => {
 const addNetwork = (request) => {
     return axios
         .post(
-            `/v2/ncm/${request.providerName}/clusters/${request.clusterName}/${request.networkType}`,
+            `/v2/cluster-providers/${request.providerName}/clusters/${request.clusterName}/${request.networkType}`,
             request.payload
         )
         .then((res) => {
@@ -515,7 +515,7 @@ const addNetwork = (request) => {
 const deleteClusterNetwork = (request) => {
     return axios
         .delete(
-            `/v2/ncm/${request.providerName}/clusters/${request.clusterName}/${request.networkType}/${request.networkName}`
+            `/v2/cluster-providers/${request.providerName}/clusters/${request.clusterName}/${request.networkType}/${request.networkName}`
         )
         .then((res) => {
             return res.data;
@@ -524,7 +524,7 @@ const deleteClusterNetwork = (request) => {
 const applyNetworkConfig = (request) => {
     return axios
         .post(
-            `/v2/ncm/${request.providerName}/clusters/${request.clusterName}/apply`,
+            `/v2/cluster-providers/${request.providerName}/clusters/${request.clusterName}/apply`,
             request.payload
         )
         .then((res) => {
@@ -534,7 +534,7 @@ const applyNetworkConfig = (request) => {
 const terminateNetworkConfig = (request) => {
     return axios
         .post(
-            `/v2/ncm/${request.providerName}/clusters/${request.clusterName}/terminate`,
+            `/v2/cluster-providers/${request.providerName}/clusters/${request.clusterName}/terminate`,
             request.payload
         )
         .then((res) => {
