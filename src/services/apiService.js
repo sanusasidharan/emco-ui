@@ -615,6 +615,13 @@ const getLogicalClouds = (projectName) => {
         .then((res) => res.data);
 };
 
+//changes Dipankar Chatterjee
+const getLogicalCloudsClusters = (projectName) => {
+    return axios
+        .get(`/middleend/projects/${projectName}/logical-clouds`)
+        .then((res) => res.data);
+};
+
 const getLogicalCloudClusterReferences = (request) => {
     return axios
         .get(
@@ -1021,6 +1028,7 @@ const vimService = {
     createLogicalCloud,
     getLogicalCloudsDetail,
     getLogicalCloudClusterReferences,
+    getLogicalCloudsClusters,
     terminateLogicalCloud,
     deleteLogicalCloudClusterReference,
     deleteLogicalCloud,

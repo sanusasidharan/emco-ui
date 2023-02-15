@@ -122,7 +122,7 @@ function DigFormIntents({logicalCloud, ...props}) {
             {(formikProps) => {
                 const {values, isSubmitting, handleChange, handleSubmit} =
                     formikProps;
-                return logicalCloud && logicalCloud.spec.clusterReferences.spec.clusterProviders.length > 0 ? (
+                return logicalCloud && logicalCloud.clusterReferences.spec.clusterProviders.length > 0 ? (
                     <form noValidate onSubmit={handleSubmit} onChange={handleChange}>
                         <Grid container spacing={4} justify="center">
                             {initialValues.apps &&
