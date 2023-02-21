@@ -127,7 +127,7 @@ const DeploymentIntentGroups = (props) => {
                     else setData([]);
                 })
                 .catch((err) => {
-                    if (err.response) {
+                    if (err.response?.data) {
                         setData(err.response.data); 
                     } else {
                         console.log("error getting deplotment intent groups : ", err);
